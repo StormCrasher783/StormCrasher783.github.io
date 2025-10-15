@@ -1,8 +1,30 @@
-# StormCrasher783.github.io
-A testing page for random ideas or abstract thoughts
-
+<!DOCTYPE html>
 <html>
-  <header>StormCrasher783.github.io</header>
-  <p1>A collection of ideas I have</p1>
-  <button><a href="stormcrasher783.github.io/main.html">password crack</a></button>
+<head>
+  <title>PyDungeon</title>
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+</head>
+<body>
+  <h1>PyDungeon (Python in the Browser)</h1>
+  <pre id="output">Loading...</pre>
+  <script>
+    async function main() {
+      let pyodide = await loadPyodide();
+
+      // Load and run your Python code from the file
+      let response = await fetch("main.py");
+      let code = await response.text();
+
+      let outputDiv = document.getElementById("output");
+
+      // Capture print output
+      pyodide.setStdout({
+        batched: (data) => outputDiv.textContent += data
+      });
+
+      await pyodide.runPythonAsync(code);
+    }
+    main();
+  </script>
+</body>
 </html>
